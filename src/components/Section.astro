@@ -1,0 +1,23 @@
+---
+import Container from './Container.astro';
+
+interface Props {
+  id?: string;
+  tone?: 'default' | 'alt' | 'brand';
+  class?: string;
+}
+
+const { id, tone = 'default', class: className } = Astro.props;
+
+const tones = {
+  default: 'bg-surface text-ink',
+  alt: 'bg-surface-alt text-ink',
+  brand: 'bg-brand-600 text-white',
+};
+---
+
+<section id={id} class:list={['py-16 lg:py-section', tones[tone], className]}>
+  <Container>
+    <slot />
+  </Container>
+</section>

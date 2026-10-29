@@ -1,0 +1,64 @@
+---
+/**
+ * Abertura do site: vídeo mudo de 4s em tela cheia, a cada carregamento da página.
+ * Vertical em telas em pé (celular), horizontal nas demais. Termina sozinha,
+ * pode ser pulada com um clique/toque na tela (ou Esc) e não aparece para quem
+ * prefere menos movimento.
+ */
+---
+
+<div
+  id="intro"
+  class="fixed inset-0 z-[100] bg-[#090909] transition-opacity duration-500"
+>
+  <video
+    id="intro-video"
+    class="size-full object-contain"
+    muted
+    playsinline
+    preload="auto"
+    aria-hidden="true"
+    data-horizontal="/videos/intro-horizontal.mp4"
+    data-vertical="/videos/intro-vertical.mp4"></video>
+</div>
+
+<noscript>
+  <style>
+    #intro {
+      display: none;
+    }
+  </style>
+</noscript>
+
+<script>
+  const intro = document.getElementById('intro');
+  const video = document.getElementById('intro-video') as HTMLVideoElement | null;
+
+  const close = () => {
+    if (!intro) return;
+    document.documentElement.style.overflow = '';
+    intro.style.opacity = '0';
+    intro.style.pointerEvents = 'none';
+    setTimeout(() => intro.remove(), 600);
+  };
+
+  if (
+    !intro ||
+    !video ||
+    window.matchMedia('(prefers-reduced-motion: reduce)').matches
+  ) {
+    intro?.remove();
+  } else {
+    document.documentElement.style.overflow = 'hidden';
+    video.src = window.matchMedia('(orientation: portrait)').matches
+      ? video.dataset.vertical!
+      : video.dataset.horizontal!;
+    video.addEventListener('ended', close);
+    video.addEventListener('error', close);
+    intro.addEventListener('click', close);
+    document.addEventListener('keydown', (e) => e.key === 'Escape' && close());
+    // Rede lenta ou autoplay bloqueado: não deixa a intro prender o visitante.
+    setTimeout(close, 8000);
+    video.play().catch(close);
+  }
+</script>

@@ -1,0 +1,107 @@
+---
+import { Icon } from 'astro-icon/components';
+import Container from './Container.astro';
+import Button from './Button.astro';
+import WhatsAppButton from './WhatsAppButton.astro';
+
+interface Stat {
+  value: string;
+  label: string;
+}
+
+interface Props {
+  eyebrow?: string;
+  title: string;
+  /** Trecho do título destacado em laranja. */
+  highlight?: string;
+  text: string;
+  stats?: Stat[];
+}
+
+const { eyebrow, title, highlight, text, stats = [] } = Astro.props;
+
+const [before, after] =
+  highlight && title.includes(highlight) ? title.split(highlight) : [title, ''];
+const photo =
+  'absolute rounded-card border-4 border-brand-600 object-cover shadow-2xl shadow-black/40';
+
+/** Vídeos em public/videos (mp4 sem áudio + poster jpg com o mesmo nome). */
+const clips = [
+  { name: 'hero-cenario', position: 'top-0 right-0 w-[66%]' },
+  { name: 'hero-camera', position: 'top-[26%] left-0 z-10 w-[48%]' },
+  { name: 'hero-celular', position: 'right-[4%] bottom-0 z-20 w-[54%]' },
+];
+---
+
+<section class="relative overflow-hidden bg-ink text-white">
+  <div
+    aria-hidden="true"
+    class="pointer-events-none absolute -top-40 -right-32 size-[34rem] rounded-full bg-brand-600/30 blur-3xl"
+  ></div>
+  <div
+    aria-hidden="true"
+    class="pointer-events-none absolute -bottom-48 -left-40 size-[30rem] rounded-full bg-brand-800/40 blur-3xl"
+  ></div>
+
+  <Container class="relative grid items-center gap-12 py-14 lg:grid-cols-[1.1fr_1fr] lg:gap-10 lg:py-24">
+    <div class="space-y-6">
+      {eyebrow && (
+        <p class="inline-flex items-center gap-2 rounded-full border border-white/20 px-4 py-1.5 text-sm font-medium text-white/80">
+          <span class="size-2 rounded-full bg-brand-500" />
+          {eyebrow}
+        </p>
+      )}
+      <h1 class="text-4xl leading-[1.1] font-extrabold sm:text-5xl lg:text-5xl xl:text-6xl">
+        {before}
+        {highlight && <span class="text-brand-400">{highlight}</span>}
+        {after}
+      </h1>
+      <p class="max-w-xl text-lg text-white/70">{text}</p>
+      <div class="pt-2">
+        <WhatsAppButton dark>
+          <Button href="#servicos" variant="outline-light" size="lg">
+            Ver serviços
+            <Icon name="ph:arrow-down-bold" class="size-4" />
+          </Button>
+        </WhatsAppButton>
+      </div>
+    </div>
+
+    <div
+      class="relative mx-auto aspect-[6/5] w-full max-w-xl"
+      aria-hidden="true"
+    >
+      {clips.map((clip) => (
+        <video
+          src={`/videos/${clip.name}.mp4`}
+          poster={`/videos/${clip.name}.jpg`}
+          width="800"
+          height="600"
+          autoplay
+          muted
+          loop
+          playsinline
+          preload="metadata"
+          class:list={[photo, 'aspect-[4/3]', clip.position]}
+        />
+      ))}
+    </div>
+  </Container>
+
+  {stats.length > 0 && (
+    <div class="relative border-t border-white/10">
+      <Container>
+        <dl class="grid divide-y divide-white/10 sm:grid-cols-3 sm:divide-x sm:divide-y-0">
+          {stats.map((stat) => (
+            <div class="py-5 sm:px-6 sm:first:pl-0">
+              <dt class="font-display text-2xl font-bold text-brand-400">
+                {stat.value}
+              </dt>
+              <dd class="text-sm text-white/70">{stat.label}</dd>
+            </div>
+          ))}
+        </dl>
+      </Container>
+    </div>
+  )}
+</section>

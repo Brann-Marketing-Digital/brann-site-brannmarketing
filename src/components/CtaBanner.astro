@@ -1,0 +1,24 @@
+---
+import Section from './Section.astro';
+import Button from './Button.astro';
+
+interface Props {
+  id?: string;
+  title: string;
+  text: string;
+  label: string;
+  href: string;
+}
+
+const { id, title, text, label, href } = Astro.props;
+---
+
+<Section id={id} tone="brand">
+  <div class="mx-auto max-w-2xl space-y-5 text-center">
+    <h2 class="text-3xl font-bold sm:text-4xl">{title}</h2>
+    <p class="text-lg text-white/90">{text}</p>
+    <Button href={href} variant="light" size="lg">
+      {label}
+    </Button>
+  </div>
+</Section>

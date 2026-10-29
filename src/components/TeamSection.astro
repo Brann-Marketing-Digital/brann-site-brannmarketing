@@ -1,0 +1,40 @@
+---
+import { Image } from 'astro:assets';
+import Section from './Section.astro';
+
+interface Member {
+  name: string;
+  role: string;
+  photo: ImageMetadata;
+}
+
+interface Props {
+  id?: string;
+  title: string;
+  intro?: string;
+  members: Member[];
+}
+
+const { id, title, intro, members } = Astro.props;
+---
+
+<Section id={id} tone="alt">
+  <div class="mx-auto mb-10 max-w-3xl space-y-3 text-center">
+    <h2 class="text-3xl font-bold sm:text-4xl">{title}</h2>
+    {intro && <p class="text-lg text-muted">{intro}</p>}
+  </div>
+  <ul class="grid gap-10 sm:grid-cols-3">
+    {members.map((member) => (
+      <li class="flex flex-col items-center text-center">
+        <Image
+          src={member.photo}
+          alt={`Foto de ${member.name}`}
+          width={400}
+          class="size-40 rounded-full bg-ink sm:size-48"
+        />
+        <p class="mt-4 text-lg font-bold">{member.name}</p>
+        <p class="text-muted">{member.role}</p>
+      </li>
+    ))}
+  </ul>
+</Section>

@@ -1,0 +1,76 @@
+---
+import { Image } from 'astro:assets';
+import { Icon } from 'astro-icon/components';
+import Section from './Section.astro';
+import placeholder from '../assets/placeholder.svg';
+
+interface Props {
+  id?: string;
+  title: string;
+  text: string;
+  points?: string[];
+  /** Imagem do bloco. Sem ela, mostra um painel com o `icon`. */
+  image?: ImageMetadata;
+  imageAlt?: string;
+  icon?: string;
+  /** Inverte a ordem texto/imagem no desktop. */
+  reverse?: boolean;
+  tone?: 'default' | 'alt';
+}
+
+const {
+  id,
+  title,
+  text,
+  points = [],
+  image,
+  imageAlt = '',
+  icon,
+  reverse = false,
+  tone = 'default',
+} = Astro.props;
+---
+
+<Section id={id} {tone} class="!py-12 lg:!py-16">
+  <div class="grid items-center gap-10 lg:grid-cols-2 lg:gap-16">
+    <div class:list={['space-y-4', reverse && 'lg:order-2']}>
+      <h2 class="text-2xl font-bold sm:text-3xl">{title}</h2>
+      <p class="text-lg text-muted">{text}</p>
+      {points.length > 0 && (
+        <ul class="space-y-2 pt-2">
+          {points.map((point) => (
+            <li class="flex items-start gap-2">
+              <Icon
+                name="lucide:check"
+                class="mt-0.5 size-5 shrink-0 text-brand-600"
+              />
+              <span>{point}</span>
+            </li>
+          ))}
+        </ul>
+      )}
+    </div>
+    {image ? (
+      <div class="group aspect-[4/3] overflow-hidden rounded-card border-4 border-brand-600">
+        <Image
+          src={image}
+          alt={imageAlt}
+          class="size-full object-cover transition-transform duration-[1500ms] ease-out group-hover:scale-110 motion-reduce:transition-none motion-reduce:group-hover:scale-100"
+        />
+      </div>
+    ) : icon ? (
+      <div
+        class="grid aspect-[4/3] place-items-center rounded-card bg-gradient-to-br from-brand-50 to-brand-200"
+        aria-hidden="true"
+      >
+        <Icon name={icon} class="size-24 text-brand-600" />
+      </div>
+    ) : (
+      <Image
+        src={placeholder}
+        alt={imageAlt}
+        class="w-full rounded-card border border-line"
+      />
+    )}
+  </div>
+</Section>

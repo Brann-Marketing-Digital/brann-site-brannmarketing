@@ -1,0 +1,55 @@
+---
+import { Icon } from 'astro-icon/components';
+import Section from './Section.astro';
+
+interface Item {
+  icon: string;
+  title: string;
+  text: string;
+}
+
+interface Props {
+  id?: string;
+  title: string;
+  intro?: string;
+  items: Item[];
+}
+
+const { id, title, intro, items } = Astro.props;
+---
+
+<Section id={id}>
+  <div class="grid gap-10 lg:grid-cols-[1fr_1.5fr] lg:gap-16">
+    <div class="space-y-4 lg:sticky lg:top-24 lg:self-start">
+      <p class="text-sm font-semibold tracking-wide text-brand-700 uppercase">
+        Quem somos
+      </p>
+      <h2 class="text-3xl font-bold sm:text-4xl">{title}</h2>
+      {intro && <p class="text-lg text-muted">{intro}</p>}
+    </div>
+    <ol class="space-y-5">
+      {items.map((item, index) => (
+        <li class="relative flex gap-4 sm:gap-5">
+          {index < items.length - 1 && (
+            <span
+              aria-hidden="true"
+              class="absolute top-12 -bottom-5 left-6 w-px -translate-x-1/2 bg-brand-600/25"
+            />
+          )}
+          <span class="relative z-10 grid size-12 shrink-0 place-items-center rounded-full border-2 border-brand-600 bg-white text-lg font-bold text-brand-700">
+            {index + 1}
+          </span>
+          <div class="relative flex-1 space-y-1 overflow-hidden rounded-card border border-line bg-surface-alt p-6">
+            <Icon
+              name={item.icon}
+              class="pointer-events-none absolute -right-3 -bottom-3 size-28 text-brand-600/10"
+              aria-hidden="true"
+            />
+            <h3 class="relative text-lg font-bold">{item.title}</h3>
+            <p class="relative text-muted">{item.text}</p>
+          </div>
+        </li>
+      ))}
+    </ol>
+  </div>
+</Section>

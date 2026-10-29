@@ -1,0 +1,26 @@
+---
+import { Image } from 'astro:assets';
+import Section from './Section.astro';
+import placeholder from '../assets/placeholder.svg';
+
+interface Props {
+  id?: string;
+  title: string;
+  text: string;
+  imageAlt: string;
+}
+
+const { id, title, text, imageAlt } = Astro.props;
+---
+
+<Section id={id} tone="alt">
+  <div class="mx-auto max-w-3xl space-y-4 text-center">
+    <h2 class="text-3xl font-bold sm:text-4xl">{title}</h2>
+    <p class="text-lg text-muted">{text}</p>
+  </div>
+  <Image
+    src={placeholder}
+    alt={imageAlt}
+    class="mx-auto mt-10 w-full max-w-4xl rounded-card border border-line bg-white"
+  />
+</Section>

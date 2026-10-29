@@ -1,0 +1,54 @@
+---
+import { Icon } from 'astro-icon/components';
+import Button from './Button.astro';
+import { site } from '../config/site';
+
+interface Props {
+  id?: string;
+  /** Estilo do aviso com o número, para fundo escuro. */
+  dark?: boolean;
+}
+
+const { id = 'contato', dark = false } = Astro.props;
+---
+
+<div id={id} data-whatsapp class="space-y-3">
+  <p
+    data-whatsapp-fallback
+    hidden
+    aria-live="polite"
+    class:list={[
+      'block w-fit rounded-lg px-4 py-3 text-sm',
+      dark ? 'bg-white/10 text-white' : 'bg-brand-50 text-brand-800',
+    ]}
+  >
+    Falar com{' '}
+    <a
+      href={site.contact.whatsapp}
+      target="_blank"
+      rel="noopener noreferrer"
+      class="font-bold whitespace-nowrap underline"
+    >
+      {site.contact.whatsappDisplay}
+    </a>
+  </p>
+  <div class="flex flex-wrap items-center gap-3">
+    <div data-whatsapp-main class="contents">
+      <Button href={site.contact.whatsapp} size="lg">
+        <Icon name="simple-icons:whatsapp" class="size-5" />
+        Chamar no WhatsApp
+      </Button>
+    </div>
+    <slot />
+  </div>
+</div>
+
+<script>
+  // Mostra o número depois do clique, para quem não conseguir abrir o WhatsApp.
+  document.querySelectorAll<HTMLElement>('[data-whatsapp]').forEach((box) => {
+    const fallback = box.querySelector<HTMLElement>('[data-whatsapp-fallback]');
+    box.querySelector('[data-whatsapp-main]')?.addEventListener('click', () => {
+      if (fallback) fallback.hidden = false;
+    });
+  });
+</script>

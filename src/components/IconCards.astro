@@ -1,0 +1,53 @@
+---
+import { Icon } from 'astro-icon/components';
+import Section from './Section.astro';
+
+interface Item {
+  icon: string;
+  title: string;
+  text?: string;
+}
+
+interface Props {
+  id?: string;
+  title: string;
+  intro?: string;
+  items: Item[];
+  tone?: 'default' | 'alt';
+  /** Colunas no desktop. */
+  columns?: 3 | 4;
+}
+
+const { id, title, intro, items, tone = 'default', columns = 3 } = Astro.props;
+---
+
+<Section id={id} {tone}>
+  <div class="mx-auto mb-10 max-w-3xl space-y-3 text-center">
+    <h2 class="text-3xl font-bold sm:text-4xl">{title}</h2>
+    {intro && <p class="text-lg text-muted">{intro}</p>}
+  </div>
+  <ul class="flex flex-wrap justify-center gap-x-5 gap-y-12 pt-6">
+    {items.map((item) => (
+      <li
+        class:list={[
+          'group relative flex w-full flex-col gap-2 rounded-card border border-line bg-white px-6 pt-12 pb-6 transition duration-200 hover:-translate-y-1 hover:border-brand-600 hover:bg-brand-600 hover:shadow-xl hover:shadow-brand-600/20 motion-reduce:transition-none motion-reduce:hover:translate-y-0 sm:w-[calc(50%-0.625rem)]',
+          columns === 4
+            ? 'lg:w-[calc(25%-0.9375rem)]'
+            : 'lg:w-[calc(33.333%-0.8334rem)]',
+        ]}
+      >
+        <span class="absolute top-0 left-6 grid size-14 -translate-y-1/2 place-items-center rounded-full bg-brand-600 text-white shadow-lg shadow-brand-600/30 transition-colors duration-200 group-hover:bg-white group-hover:text-brand-600">
+          <Icon name={item.icon} class="size-8" />
+        </span>
+        <h3 class="text-lg font-bold transition-colors duration-200 group-hover:text-white">
+          {item.title}
+        </h3>
+        {item.text && (
+          <p class="text-muted transition-colors duration-200 group-hover:text-white/90">
+            {item.text}
+          </p>
+        )}
+      </li>
+    ))}
+  </ul>
+</Section>

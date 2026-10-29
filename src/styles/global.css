@@ -1,0 +1,60 @@
+@import 'tailwindcss';
+@import '@fontsource-variable/inter';
+@import '@fontsource-variable/plus-jakarta-sans';
+
+@theme {
+  /* Marca: laranja avermelhado */
+  --color-brand-50: oklch(0.97 0.02 40);
+  --color-brand-100: oklch(0.94 0.04 40);
+  --color-brand-200: oklch(0.88 0.09 39);
+  --color-brand-300: oklch(0.8 0.14 38);
+  --color-brand-400: oklch(0.71 0.185 37);
+  --color-brand-500: oklch(0.64 0.2 36);
+  --color-brand-600: oklch(0.58 0.205 34);
+  --color-brand-700: oklch(0.5 0.18 33);
+  --color-brand-800: oklch(0.42 0.14 33);
+  --color-brand-900: oklch(0.34 0.1 33);
+
+  /* Neutros */
+  --color-ink: oklch(0.2 0.01 40);
+  --color-muted: oklch(0.45 0.01 40);
+  --color-surface: oklch(1 0 0);
+  --color-surface-alt: oklch(0.97 0.005 60);
+  --color-line: oklch(0.9 0.005 60);
+
+  --font-sans: 'Inter Variable', ui-sans-serif, system-ui, sans-serif;
+  --font-display:
+    'Plus Jakarta Sans Variable', 'Inter Variable', ui-sans-serif, system-ui,
+    sans-serif;
+
+  --container-page: 76rem;
+  --spacing-section: 5rem;
+  --radius-card: 1rem;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-surface font-sans text-ink antialiased;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    @apply font-display tracking-tight text-balance;
+  }
+
+  :focus-visible {
+    @apply outline-2 outline-offset-2 outline-brand-600;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+  }
+}

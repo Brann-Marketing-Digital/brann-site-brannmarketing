@@ -1,0 +1,39 @@
+---
+import { Icon } from 'astro-icon/components';
+import Section from './Section.astro';
+
+interface Testimonial {
+  quote: string;
+  author: string;
+  role: string;
+  company: string;
+}
+
+interface Props {
+  id?: string;
+  title: string;
+  items: Testimonial[];
+}
+
+const { id, title, items } = Astro.props;
+---
+
+<Section id={id} tone="alt">
+  <h2 class="mb-10 text-center text-3xl font-bold sm:text-4xl">{title}</h2>
+  <ul class="-mx-4 flex snap-x snap-mandatory gap-4 overflow-x-auto px-4 pb-4 sm:mx-0 sm:px-0 lg:grid lg:grid-cols-3 lg:overflow-visible">
+    {items.map((item) => (
+      <li class="w-[85%] shrink-0 snap-center sm:w-[60%] lg:w-auto">
+        <figure class="flex h-full flex-col gap-5 rounded-card border border-line bg-white p-6">
+          <Icon name="lucide:quote" class="size-7 text-brand-500" />
+          <blockquote class="flex-1 text-base">{item.quote}</blockquote>
+          <figcaption class="text-sm">
+            <span class="block font-semibold">{item.author}</span>
+            <span class="text-muted">
+              {item.role}, {item.company}
+            </span>
+          </figcaption>
+        </figure>
+      </li>
+    ))}
+  </ul>
+</Section>

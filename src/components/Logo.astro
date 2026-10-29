@@ -1,0 +1,22 @@
+---
+import { Image } from 'astro:assets';
+import logo from '../assets/logo.png';
+import logoBranco from '../assets/logo-branco.png';
+import { site } from '../config/site';
+
+interface Props {
+  /** `branco` para fundos escuros. */
+  variant?: 'cor' | 'branco';
+  class?: string;
+}
+
+const { variant = 'cor', class: className } = Astro.props;
+---
+
+<Image
+  src={variant === 'branco' ? logoBranco : logo}
+  alt={site.name}
+  width={480}
+  loading="eager"
+  class:list={['h-auto', className]}
+/>

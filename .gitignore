@@ -1,0 +1,35 @@
+# build output
+dist/
+# generated types
+.astro/
+
+# dependencies
+node_modules/
+
+# logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+
+# environment variables
+.env
+.env.production
+
+# macOS-specific files
+.DS_Store
+
+# jetbrains setting folder
+.idea/
+
+# README fica só local, não vai para o GitHub
+/README.md
+
+# Arquivos locais (IA, pesquisa, editor): não vão para o GitHub
+/CLAUDE.md
+/AGENTS.md
+.claude/
+.agents/
+/docs/
+.vscode/
