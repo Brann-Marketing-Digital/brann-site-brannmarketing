@@ -46,10 +46,10 @@ export const site = {
   },
 
   nav: [
-    { label: 'Sobre', href: '#sobre' },
-    { label: 'Serviços', href: '#servicos' },
-    { label: 'Equipe', href: '#equipe' },
-    { label: 'Contato', href: '#contato' },
+    { label: 'Sobre', href: '/#sobre' },
+    { label: 'Serviços', href: '/#servicos' },
+    { label: 'Equipe', href: '/#equipe' },
+    { label: 'Contato', href: '/#contato' },
   ] satisfies NavLink[],
 
   social: [
@@ -67,30 +67,29 @@ export const site = {
     {
       title: 'Serviços',
       links: [
-        { label: 'Gestão de redes sociais', href: '#servicos' },
-        { label: 'Criação de site', href: '#servicos' },
-        { label: 'Criação de identidade visual', href: '#servicos' },
-        { label: 'Produção de vídeos', href: '#servicos' },
-        { label: 'SEO estrutural', href: '#servicos' },
-        { label: 'Tráfego pago', href: '#servicos' },
-        { label: 'Captação de leads', href: '#servicos' },
-        { label: 'Ferramentas digitais sob medida', href: '#servicos' },
+        { label: 'Gestão de redes sociais', href: '/#servicos' },
+        { label: 'Criação de site', href: '/#servicos' },
+        { label: 'Criação de identidade visual', href: '/#servicos' },
+        { label: 'Produção de vídeos', href: '/#servicos' },
+        { label: 'SEO estrutural', href: '/#servicos' },
+        { label: 'Tráfego pago', href: '/#servicos' },
+        { label: 'Captação de leads', href: '/#servicos' },
+        { label: 'Ferramentas digitais sob medida', href: '/#servicos' },
       ],
     },
     {
       title: 'Empresa',
       links: [
-        { label: 'Sobre', href: '#sobre' },
-        { label: 'Equipe', href: '#equipe' },
-        { label: 'Contato', href: '#contato' },
+        { label: 'Sobre', href: '/#sobre' },
+        { label: 'Equipe', href: '/#equipe' },
+        { label: 'Contato', href: '/#contato' },
       ],
     },
   ] satisfies FooterColumn[],
 
   legalLinks: [
-    { label: 'Política de privacidade', href: '#' },
-    { label: 'Termos de uso', href: '#' },
-    { label: 'Cookies', href: '#' },
+    { label: 'Política de privacidade', href: '/politica-de-privacidade/' },
+    { label: 'Cookies', href: '/politica-de-privacidade/#cookies' },
   ] satisfies NavLink[],
 } as const;
 

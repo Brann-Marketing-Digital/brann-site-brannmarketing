@@ -1,0 +1,111 @@
+---
+import Container from '../components/Container.astro';
+import { site } from '../config/site';
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout
+  title="Política de privacidade"
+  description={`Como a ${site.name} trata os dados pessoais de quem visita este site, conforme a LGPD.`}
+  intro={false}
+>
+  <Container class="max-w-3xl py-16">
+    <h1 class="font-display text-3xl font-bold sm:text-4xl">
+      Política de privacidade
+    </h1>
+    <p class="mt-2 text-sm text-muted">
+      Última atualização: 31 de outubro de 2026
+    </p>
+
+    <div class="mt-10 text-base leading-7 text-ink [&_a]:text-brand-600 [&_a]:underline [&_h2]:mt-10 [&_h2]:mb-3 [&_h2]:scroll-mt-24 [&_h2]:font-display [&_h2]:text-xl [&_h2]:font-bold [&_p]:mb-4 [&_ul]:mb-4 [&_ul]:list-disc [&_ul]:space-y-1 [&_ul]:pl-6">
+      <p>
+        Esta política explica como a {site.name} trata os dados pessoais de quem
+        visita este site, de acordo com a Lei Geral de Proteção de Dados (Lei nº
+        13.709/2018, a LGPD). A controladora desses dados é a {site.name}.
+      </p>
+
+      <h2>Quais dados coletamos</h2>
+      <p>Este site não tem formulários. Tratamos apenas:</p>
+      <ul>
+        <li>
+          os dados que você nos passar pelo WhatsApp ou por outro canal de
+          contato;
+        </li>
+        <li>
+          dados técnicos registrados pelo provedor que hospeda o site, como
+          endereço IP, data e hora e navegador, para funcionamento e segurança.
+        </li>
+      </ul>
+
+      <h2>Para que usamos</h2>
+      <p>
+        Usamos seus dados só para responder ao seu contato, enviar orçamentos e
+        propostas que você pediu e manter o site funcionando com segurança. As
+        bases legais são a execução de procedimentos preliminares a um contrato,
+        a seu pedido, e o nosso legítimo interesse em manter o site seguro (art.
+        7º, V e IX, da LGPD).
+      </p>
+
+      <h2>Com quem compartilhamos</h2>
+      <p>Não vendemos nem alugamos seus dados. Eles passam apenas por:</p>
+      <ul>
+        <li>WhatsApp (Meta), quando você nos envia uma mensagem;</li>
+        <li>o provedor de hospedagem do site;</li>
+        <li>autoridades públicas, quando a lei exigir.</li>
+      </ul>
+      <p>
+        Alguns desses serviços podem armazenar dados em servidores fora do
+        Brasil, sempre com as garantias previstas no art. 33 da LGPD.
+      </p>
+
+      <h2 id="cookies">Cookies</h2>
+      <p>
+        Este site não usa cookies de análise, rastreamento ou publicidade. Os
+        links para redes sociais levam a sites de terceiros, que têm as próprias
+        políticas de privacidade.
+      </p>
+
+      <h2>Dados dos nossos clientes</h2>
+      <p>
+        Quando criamos sites, campanhas ou ferramentas para outras empresas,
+        tratamos dados em nome delas, como operadora. Nesses casos, cada empresa
+        é a controladora e vale a política de privacidade dela.
+      </p>
+
+      <h2>Por quanto tempo guardamos</h2>
+      <p>
+        Guardamos seus dados pelo tempo necessário para atender ao seu pedido e
+        cumprir obrigações legais. Depois disso, eles são apagados.
+      </p>
+
+      <h2>Seus direitos</h2>
+      <p>
+        Você pode pedir, a qualquer momento: confirmação de que tratamos seus
+        dados, acesso a eles, correção, anonimização, bloqueio ou eliminação,
+        portabilidade, informação sobre com quem compartilhamos e revogação do
+        consentimento, quando for o caso (art. 18 da LGPD). Também pode reclamar
+        à Autoridade Nacional de Proteção de Dados (ANPD).
+      </p>
+
+      <h2>Contato</h2>
+      <p>
+        Para exercer seus direitos ou tirar dúvidas sobre esta política, fale
+        conosco pelo WhatsApp
+        <a
+          href={site.contact.whatsapp}
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          {site.contact.whatsappDisplay}
+        </a>
+        .
+      </p>
+
+      <h2>Alterações</h2>
+      <p>
+        Esta política pode ser atualizada. A data no topo da página indica a
+        versão em vigor.
+      </p>
+    </div>
+  </Container>
+</BaseLayout>

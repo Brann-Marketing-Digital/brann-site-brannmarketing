@@ -8,9 +8,11 @@ import '../styles/global.css';
 interface Props {
   title: string;
   description?: string;
+  /** Vídeo de abertura em tela cheia. Desligue em páginas de texto. */
+  intro?: boolean;
 }
 
-const { title, description = site.description } = Astro.props;
+const { title, description = site.description, intro = true } = Astro.props;
 const fullTitle = title === site.name ? title : `${title} | ${site.name}`;
 const canonical = new URL(Astro.url.pathname, Astro.site);
 ---
@@ -27,7 +29,7 @@ const canonical = new URL(Astro.url.pathname, Astro.site);
     <meta name="generator" content={Astro.generator} />
   </head>
   <body class="flex min-h-dvh flex-col">
-    <Intro />
+    {intro && <Intro />}
     <a
       href="#conteudo"
       class="sr-only focus:not-sr-only focus:fixed focus:top-2 focus:left-2 focus:z-50 focus:rounded focus:bg-white focus:px-4 focus:py-2"
