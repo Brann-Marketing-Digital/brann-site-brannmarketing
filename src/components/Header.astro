@@ -37,6 +37,15 @@ const instagram = site.social.find((item) => item.label === 'Instagram');
           <Icon name={instagram.icon} class="size-5" />
         </a>
       )}
+      <a
+        href={site.contact.whatsapp}
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label="Chamar no WhatsApp (abre em nova aba)"
+        class="grid size-10 place-items-center rounded-full text-ink transition-colors hover:bg-brand-50 hover:text-brand-700 sm:hidden"
+      >
+        <Icon name="simple-icons:whatsapp" class="size-5" />
+      </a>
       <Button href={site.cta.href} class="max-sm:hidden">
         {site.cta.label}
       </Button>

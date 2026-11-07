@@ -1,4 +1,5 @@
 ---
+import { Icon } from 'astro-icon/components';
 import Section from './Section.astro';
 import Button from './Button.astro';
 
@@ -13,12 +14,15 @@ interface Props {
 const { id, title, text, label, href } = Astro.props;
 ---
 
-<Section id={id} tone="brand">
-  <div class="mx-auto max-w-2xl space-y-5 text-center">
-    <h2 class="text-3xl font-bold sm:text-4xl">{title}</h2>
-    <p class="text-lg text-white/90">{text}</p>
-    <Button href={href} variant="light" size="lg">
-      {label}
-    </Button>
-  </div>
-</Section>
+<div data-cta-end>
+  <Section id={id} tone="brand" class="scroll-mt-16 md:scroll-mt-20">
+    <div class="mx-auto max-w-2xl space-y-5 text-center">
+      <h2 class="text-3xl font-bold sm:text-4xl">{title}</h2>
+      <p class="text-lg text-white">{text}</p>
+      <Button href={href} variant="light" size="lg">
+        <Icon name="simple-icons:whatsapp" class="size-5" />
+        {label}
+      </Button>
+    </div>
+  </Section>
+</div>

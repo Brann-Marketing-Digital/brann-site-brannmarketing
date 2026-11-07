@@ -1,0 +1,54 @@
+---
+/**
+ * Botão de WhatsApp fixo no rodapé da tela, só no celular.
+ * Aparece quando o hero sai da tela e some quando o CTA final ou o rodapé
+ * entram, para não ficar repetido ao lado de outro botão de contato.
+ */
+import { Icon } from 'astro-icon/components';
+import { site } from '../config/site';
+---
+
+<a
+  id="mobile-whatsapp"
+  href={site.contact.whatsapp}
+  target="_blank"
+  rel="noopener noreferrer"
+  data-visible="false"
+  tabindex="-1"
+  aria-hidden="true"
+  class="fixed right-4 bottom-[max(1rem,env(safe-area-inset-bottom))] left-4 z-30 flex items-center justify-center gap-2 rounded-full bg-brand-600 px-6 py-3.5 font-semibold text-white shadow-lg shadow-black/25 transition-[translate,opacity,scale] duration-200 ease-out select-none data-[visible=false]:pointer-events-none data-[visible=false]:translate-y-4 data-[visible=false]:opacity-0 active:scale-[0.97] motion-reduce:transition-none md:hidden"
+>
+  <Icon name="simple-icons:whatsapp" class="size-5" />
+  Chamar no WhatsApp
+</a>
+
+<script>
+  const button = document.getElementById('mobile-whatsapp');
+  const hero = document.querySelector('[data-hero]');
+  const endings = document.querySelectorAll('[data-cta-end], footer');
+
+  if (button) {
+    let heroVisible = Boolean(hero);
+    const endingsVisible = new Set<Element>();
+
+    const update = () => {
+      const show = !heroVisible && endingsVisible.size === 0;
+      button.dataset.visible = String(show);
+      button.tabIndex = show ? 0 : -1;
+      button.setAttribute('aria-hidden', String(!show));
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      for (const entry of entries) {
+        if (entry.target === hero) heroVisible = entry.isIntersecting;
+        else if (entry.isIntersecting) endingsVisible.add(entry.target);
+        else endingsVisible.delete(entry.target);
+      }
+      update();
+    });
+
+    if (hero) observer.observe(hero);
+    endings.forEach((el) => observer.observe(el));
+    update();
+  }
+</script>

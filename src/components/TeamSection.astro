@@ -13,12 +13,13 @@ interface Props {
   title: string;
   intro?: string;
   members: Member[];
+  tone?: 'default' | 'alt';
 }
 
-const { id, title, intro, members } = Astro.props;
+const { id, title, intro, members, tone = 'alt' } = Astro.props;
 ---
 
-<Section id={id} tone="alt">
+<Section id={id} {tone}>
   <div class="mx-auto mb-10 max-w-3xl space-y-3 text-center">
     <h2 class="text-3xl font-bold sm:text-4xl">{title}</h2>
     {intro && <p class="text-lg text-muted">{intro}</p>}

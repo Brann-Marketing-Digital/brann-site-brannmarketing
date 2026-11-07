@@ -1,26 +1,49 @@
 ---
 /**
- * Abertura do site: vídeo mudo de 4s em tela cheia, a cada carregamento da página.
- * Vertical em telas em pé (celular), horizontal nas demais. Termina sozinha,
- * pode ser pulada com um clique/toque na tela (ou Esc) e não aparece para quem
- * prefere menos movimento.
+ * Abertura do site: vídeo mudo de 4s em tela cheia, uma vez por visita
+ * (sessionStorage). Vertical em telas em pé (celular), horizontal nas demais.
+ * Termina sozinha, tem botão "Pular" (e aceita clique na tela ou Esc) e não
+ * aparece para quem prefere menos movimento ou está economizando dados.
  */
 ---
 
 <div
   id="intro"
-  class="fixed inset-0 z-[100] bg-[#090909] transition-opacity duration-500"
+  class="fixed inset-0 z-[100] bg-[#090909] transition-opacity duration-500 ease-out"
 >
   <video
     id="intro-video"
     class="size-full object-contain"
     muted
     playsinline
-    preload="auto"
+    preload="none"
     aria-hidden="true"
     data-horizontal="/videos/intro-horizontal.mp4"
     data-vertical="/videos/intro-vertical.mp4"></video>
+  <button
+    type="button"
+    id="intro-skip"
+    class="absolute right-4 bottom-[max(1.5rem,env(safe-area-inset-bottom))] rounded-full border border-white/30 px-5 py-2 text-sm font-medium text-white/80 transition-[background-color,color,scale] duration-150 ease-out hover:bg-white/10 hover:text-white active:scale-[0.97] sm:right-8"
+  >
+    Pular
+  </button>
 </div>
+
+<script is:inline>
+  // Roda antes da pintura: quem já viu a intro nesta visita, prefere menos
+  // movimento ou está economizando dados nem chega a ver a tela preta.
+  (function () {
+    var seen = false;
+    try {
+      seen = sessionStorage.getItem('brann-intro') === '1';
+    } catch (e) {}
+    var saveData = navigator.connection && navigator.connection.saveData;
+    var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var intro = document.getElementById('intro');
+    if (intro && (seen || saveData || reduce)) intro.remove();
+    else document.documentElement.style.overflow = 'hidden';
+  })();
+</script>
 
 <noscript>
   <style>
@@ -34,22 +57,20 @@
   const intro = document.getElementById('intro');
   const video = document.getElementById('intro-video') as HTMLVideoElement | null;
 
-  const close = () => {
-    if (!intro) return;
-    document.documentElement.style.overflow = '';
-    intro.style.opacity = '0';
-    intro.style.pointerEvents = 'none';
-    setTimeout(() => intro.remove(), 600);
-  };
+  if (intro && video) {
+    let closed = false;
+    const close = () => {
+      if (closed) return;
+      closed = true;
+      try {
+        sessionStorage.setItem('brann-intro', '1');
+      } catch {}
+      document.documentElement.style.overflow = '';
+      intro.style.opacity = '0';
+      intro.style.pointerEvents = 'none';
+      setTimeout(() => intro.remove(), 600);
+    };
 
-  if (
-    !intro ||
-    !video ||
-    window.matchMedia('(prefers-reduced-motion: reduce)').matches
-  ) {
-    intro?.remove();
-  } else {
-    document.documentElement.style.overflow = 'hidden';
     video.src = window.matchMedia('(orientation: portrait)').matches
       ? video.dataset.vertical!
       : video.dataset.horizontal!;
@@ -58,7 +79,7 @@
     intro.addEventListener('click', close);
     document.addEventListener('keydown', (e) => e.key === 'Escape' && close());
     // Rede lenta ou autoplay bloqueado: não deixa a intro prender o visitante.
-    setTimeout(close, 8000);
+    setTimeout(close, 6000);
     video.play().catch(close);
   }
 </script>
