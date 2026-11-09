@@ -4,15 +4,8 @@ import Hero from '../components/Hero.astro';
 import AboutSection from '../components/AboutSection.astro';
 import IconCards from '../components/IconCards.astro';
 import FeatureBlock from '../components/FeatureBlock.astro';
-import ServicesIndex from '../components/ServicesIndex.astro';
-import ServiceGroup from '../components/ServiceGroup.astro';
-import LogoStrip from '../components/LogoStrip.astro';
-import Testimonials from '../components/Testimonials.astro';
 import TeamSection from '../components/TeamSection.astro';
 import CtaBanner from '../components/CtaBanner.astro';
-import AreasAtendidas from '../components/AreasAtendidas.astro';
-import FaqList from '../components/FaqList.astro';
-import { faqPage } from '../data/schema';
 import { site } from '../config/site';
 import fotoRedes from '../assets/servicos/gestao-redes-sociais.jpg';
 import fotoSite from '../assets/servicos/criacao-site.jpg';
@@ -26,33 +19,15 @@ import guilherme from '../assets/equipe/guilherme-viana.png';
 import joao from '../assets/equipe/joao-duarte.png';
 import gustavo from '../assets/equipe/gustavo-sorato.png';
 
-const grupos = [
-  {
-    id: 'presenca-e-marca',
-    title: 'Presença e marca',
-    services: [
-      { id: 'redes-sociais', title: 'Gestão de redes sociais' },
-      { id: 'identidade-visual', title: 'Criação de identidade visual' },
-      { id: 'producao-de-videos', title: 'Produção de vídeos' },
-    ],
-  },
-  {
-    id: 'site-e-google',
-    title: 'Site e Google',
-    services: [
-      { id: 'criacao-de-site', title: 'Criação de site' },
-      { id: 'seo', title: 'SEO estrutural' },
-    ],
-  },
-  {
-    id: 'clientes-e-vendas',
-    title: 'Clientes e vendas',
-    services: [
-      { id: 'trafego-pago', title: 'Tráfego pago' },
-      { id: 'captacao-de-leads', title: 'Captação de leads' },
-      { id: 'ferramentas-sob-medida', title: 'Ferramentas digitais sob medida' },
-    ],
-  },
+const servicos = [
+  { icon: 'ph:heart-duotone', title: 'Gestão de redes sociais' },
+  { icon: 'ph:browser-duotone', title: 'Criação de site' },
+  { icon: 'ph:palette-duotone', title: 'Criação de identidade visual' },
+  { icon: 'ph:video-camera-duotone', title: 'Produção de vídeos' },
+  { icon: 'ph:magnifying-glass-duotone', title: 'SEO estrutural' },
+  { icon: 'ph:cursor-click-duotone', title: 'Tráfego pago' },
+  { icon: 'ph:funnel-duotone', title: 'Captação de leads' },
+  { icon: 'ph:puzzle-piece-duotone', title: 'Ferramentas digitais sob medida' },
 ];
 
 const motivos = [
@@ -73,25 +48,6 @@ const motivos = [
   },
 ];
 
-const perguntas = [
-  {
-    q: 'Onde fica a Brann Marketing Digital?',
-    a: 'A Brann é uma agência de marketing digital de Tubarão, em Santa Catarina. Não recebemos clientes no local: o atendimento é online ou indo até a sua empresa.',
-  },
-  {
-    q: 'Quais cidades a Brann atende?',
-    a: 'Tubarão, Capivari de Baixo, Laguna, Gravatal, Braço do Norte, Criciúma e outras cidades do sul de Santa Catarina.',
-  },
-  {
-    q: 'Quais serviços a agência oferece?',
-    a: 'Gestão de redes sociais, criação de sites, identidade visual, produção de vídeos, SEO, tráfego pago, captação de leads e ferramentas digitais sob medida.',
-  },
-  {
-    q: 'Como faço para contratar?',
-    a: 'Chame a gente no WhatsApp pelo número +55 48 99841-0334 e conte o momento da sua empresa. A partir disso, desenhamos o próximo passo juntos.',
-  },
-];
-
 const equipe = [
   {
     name: 'Guilherme Viana',
@@ -107,15 +63,11 @@ const equipe = [
 ];
 ---
 
-<BaseLayout
-  title="Agência de Marketing em Tubarão (SC)"
-  description={site.description}
-  schema={[faqPage(perguntas)]}
->
+<BaseLayout title={site.name} description={site.description}>
   <Hero
     title={site.tagline}
-    highlight="posicionamento e resultado."
-    text="Agência de marketing digital em Tubarão (SC) e região. Estratégia de verdade, desenhada para o momento, os objetivos e o mercado do seu negócio. Mais do que entregar serviços, entregamos direção, organização e resultado."
+    highlight="posicionamento e resultado"
+    text="Estratégia de verdade, desenhada para o momento, os objetivos e o mercado do seu negócio. Mais do que entregar serviços, entregamos direção, organização e resultado."
   />
   <AboutSection
     id="sobre"
@@ -138,165 +90,117 @@ const equipe = [
       },
     ]}
   />
-  {site.proof.clients.length > 0 && (
-    <LogoStrip title="Marcas que confiam na Brann" logos={site.proof.clients} />
-  )}
-  <ServicesIndex
+  <IconCards
     id="servicos"
+    tone="alt"
+    columns={4}
     title="Nossos serviços"
     intro="Tudo o que a sua marca precisa para aparecer, ser lembrada e vender."
-    groups={grupos}
+    items={servicos}
   />
-  <ServiceGroup
-    id="presenca-e-marca"
-    title="Presença e marca"
-    intro="Para a sua marca ser vista, reconhecida e lembrada."
-    message="Olá! Vim pelo site da Brann e quero conversar sobre redes sociais, identidade visual ou vídeos."
-    ctaLabel="Quer fortalecer a presença da sua marca?"
-  >
-    <FeatureBlock
-      id="redes-sociais"
-      href="/servicos/gestao-de-redes-sociais/"
-      title="Gestão de redes sociais"
-      text="Planejamos, criamos e publicamos o conteúdo da sua marca para você ser visto, lembrado e manter uma presença digital consistente."
-      points={[
-        'Planejamento de conteúdo alinhado ao seu posicionamento',
-        'Criação de posts, artes e vídeos',
-        'Acompanhamento dos resultados',
-      ]}
-      image={fotoRedes}
-      imageAlt="Ilustração 3D de um celular com curtidas, comentários e notificações"
-    />
-    <FeatureBlock
-      id="identidade-visual"
-      href="/servicos/identidade-visual/"
-      title="Criação de identidade visual"
-      text="Branding é gerir a estratégia da marca com planejamento de longo prazo, para que sua empresa seja percebida do jeito que deseja e cresça de forma inteligente e duradoura."
-      points={[
-        'Posicionamento claro no mercado',
-        'Identidade visual consistente',
-        'Reputação sólida com o seu público',
-      ]}
-      reverse
-      image={fotoIdentidade}
-      imageAlt="Ilustração 3D de uma paleta de tintas, amostras de cores e um lápis"
-    />
-    <FeatureBlock
-      id="producao-de-videos"
-      href="/servicos/producao-de-videos/"
-      title="Produção de vídeos"
-      text="Vídeos pensados, gravados e editados para fazer sua marca aparecer ainda mais nas redes sociais."
-      image={fotoVideos}
-      imageAlt="Ilustração 3D de uma câmera de vídeo, uma claquete e um botão de play"
-    />
-  </ServiceGroup>
-  <ServiceGroup
-    id="site-e-google"
+  <FeatureBlock
+    title="Gestão de redes sociais"
+    text="Planejamos, criamos e publicamos o conteúdo da sua marca para você ser visto, lembrado e manter uma presença digital consistente."
+    points={[
+      'Planejamento de conteúdo alinhado ao seu posicionamento',
+      'Criação de posts, artes e vídeos',
+      'Acompanhamento dos resultados',
+    ]}
+    image={fotoRedes}
+    imageAlt="Ilustração 3D de um celular com curtidas, comentários e notificações"
+  />
+  <FeatureBlock
+    title="Criação de site"
+    text="Sites rápidos e bonitos, pensados para transformar visitantes em contatos e prontos para serem encontrados no Google."
+    points={[
+      'Layout que funciona bem no celular',
+      'Estrutura pensada para conversão',
+      'Botão direto para o seu WhatsApp',
+    ]}
     tone="alt"
-    title="Site e Google"
-    intro="Para quem procura o que você vende encontrar a sua empresa."
-    message="Olá! Vim pelo site da Brann e quero conversar sobre site ou SEO."
-    ctaLabel="Precisa de um site que traga contatos?"
-  >
-    <FeatureBlock
-      id="criacao-de-site"
-      href="/servicos/criacao-de-sites/"
-      title="Criação de site"
-      text="Sites rápidos e bonitos, pensados para transformar visitantes em contatos e prontos para serem encontrados no Google."
-      points={[
-        'Layout que funciona bem no celular',
-        'Estrutura pensada para conversão',
-        'Botão direto para o seu WhatsApp',
-      ]}
-      image={fotoSite}
-      imageAlt="Ilustração 3D de uma página de site com imagem, textos e botões"
-    />
-    <FeatureBlock
-      id="seo"
-      href="/servicos/seo/"
-      title="SEO estrutural"
-      text="Seu site organizado para ser encontrado no Google: estrutura, velocidade e páginas bem montadas."
-      points={[
-        'Auditoria técnica do site',
-        'Arquitetura de páginas, títulos e descrições',
-        'Velocidade e experiência no celular',
-      ]}
-      reverse
-      image={fotoSeo}
-      imageAlt="Ilustração 3D de uma barra de busca com uma lupa sobre o primeiro resultado"
-    />
-  </ServiceGroup>
-  <ServiceGroup
-    id="clientes-e-vendas"
-    title="Clientes e vendas"
-    intro="Para transformar atenção em contatos e contatos em clientes."
-    message="Olá! Vim pelo site da Brann e quero conversar sobre tráfego pago, captação de leads ou uma ferramenta sob medida."
-    ctaLabel="Quer mais clientes chegando pelo digital?"
-  >
-    <FeatureBlock
-      id="trafego-pago"
-      href="/servicos/trafego-pago/"
-      title="Tráfego pago"
-      text="Anúncios no Google e no Meta que levam pessoas interessadas até o seu WhatsApp."
-      points={[
-        'Campanhas no Google Ads e no Meta Ads',
-        'Públicos e remarketing',
-        'Medição de conversões e relatórios simples',
-      ]}
-      image={fotoTrafego}
-      imageAlt="Ilustração 3D de uma janela de site com um cursor clicando em um anúncio e um alvo"
-    />
-    <FeatureBlock
-      id="captacao-de-leads"
-      href="/servicos/captacao-de-leads/"
-      title="Captação de leads"
-      text="Atrair visitantes é só o primeiro passo. O resultado acontece quando eles entram em um funil de vendas estruturado e se transformam em leads qualificados."
-      points={[
-        'Captura e qualificação de leads',
-        'Formulários inteligentes e estratégias de conversão',
-        'Automação de marketing para nutrir cada contato',
-      ]}
-      reverse
-      image={fotoLeads}
-      imageAlt="Ilustração 3D de um funil que transforma contatos em um cartão de lead"
-    />
-    <FeatureBlock
-      id="ferramentas-sob-medida"
-      href="/servicos/ferramentas-sob-medida/"
-      title="Ferramentas digitais sob medida"
-      text="Precisa de algo que não existe pronto? A gente desenha e constrói para o seu negócio."
-      points={[
-        'Plataforma de vídeos e treinamentos para equipes',
-        'Área de membros ou área do cliente',
-        'Painéis e sistemas internos',
-      ]}
-      image={fotoFerramentas}
-      imageAlt="Ilustração 3D de peças de quebra-cabeça, uma engrenagem e um painel de gráficos"
-    />
-  </ServiceGroup>
+    reverse
+    image={fotoSite}
+    imageAlt="Ilustração 3D de uma página de site com imagem, textos e botões"
+  />
+  <FeatureBlock
+    title="Criação de identidade visual"
+    text="Branding é gerir a estratégia da marca com planejamento de longo prazo, para que sua empresa seja percebida do jeito que deseja e cresça de forma inteligente e duradoura."
+    points={[
+      'Posicionamento claro no mercado',
+      'Identidade visual consistente',
+      'Reputação sólida com o seu público',
+    ]}
+    image={fotoIdentidade}
+    imageAlt="Ilustração 3D de uma paleta de tintas, amostras de cores e um lápis"
+  />
+  <FeatureBlock
+    title="Produção de vídeos"
+    text="Vídeos pensados, gravados e editados para fazer sua marca aparecer ainda mais nas redes sociais."
+    tone="alt"
+    reverse
+    image={fotoVideos}
+    imageAlt="Ilustração 3D de uma câmera de vídeo, uma claquete e um botão de play"
+  />
+  <FeatureBlock
+    title="SEO estrutural"
+    text="Seu site organizado para ser encontrado no Google: estrutura, velocidade e páginas bem montadas."
+    points={[
+      'Auditoria técnica do site',
+      'Arquitetura de páginas, títulos e descrições',
+      'Velocidade e experiência no celular',
+    ]}
+    image={fotoSeo}
+    imageAlt="Ilustração 3D de uma barra de busca com uma lupa sobre o primeiro resultado"
+  />
+  <FeatureBlock
+    title="Tráfego pago"
+    text="Anúncios no Google e no Meta que levam pessoas interessadas até o seu WhatsApp."
+    points={[
+      'Campanhas no Google Ads e no Meta Ads',
+      'Públicos e remarketing',
+      'Medição de conversões e relatórios simples',
+    ]}
+    tone="alt"
+    reverse
+    image={fotoTrafego}
+    imageAlt="Ilustração 3D de uma janela de site com um cursor clicando em um anúncio e um alvo"
+  />
+  <FeatureBlock
+    title="Captação de leads"
+    text="Atrair visitantes é só o primeiro passo. O resultado acontece quando eles entram em um funil de vendas estruturado e se transformam em leads qualificados."
+    points={[
+      'Captura e qualificação de leads',
+      'Formulários inteligentes e estratégias de conversão',
+      'Automação de marketing para nutrir cada contato',
+    ]}
+    image={fotoLeads}
+    imageAlt="Ilustração 3D de um funil que transforma contatos em um cartão de lead"
+  />
+  <FeatureBlock
+    title="Ferramentas digitais sob medida"
+    text="Precisa de algo que não existe pronto? A gente desenha e constrói para o seu negócio."
+    points={[
+      'Plataforma de vídeos e treinamentos para equipes',
+      'Área de membros ou área do cliente',
+      'Painéis e sistemas internos',
+    ]}
+    tone="alt"
+    reverse
+    image={fotoFerramentas}
+    imageAlt="Ilustração 3D de peças de quebra-cabeça, uma engrenagem e um painel de gráficos"
+  />
   <IconCards
-    tone="alt"
+    tone="default"
     title="Por que escolher a Brann Marketing?"
     items={motivos}
   />
-  {site.proof.testimonials.length > 0 && (
-    <Testimonials
-      id="depoimentos"
-      title="O que dizem os nossos clientes"
-      items={site.proof.testimonials}
-    />
-  )}
   <TeamSection
     id="equipe"
-    tone={site.proof.testimonials.length > 0 ? 'alt' : 'default'}
     title="Quem está à frente da Brann"
     intro="Três fundadores, unidos pelo mesmo objetivo e apoiados por uma rede de especialistas, para fazer acontecer."
     members={equipe}
   />
-  <AreasAtendidas id="onde-atendemos" />
-  <FaqList id="perguntas" tone="alt" items={perguntas} />
   <CtaBanner
-    id="contato"
     title="Fale conosco!"
     text="Conte para a gente o momento da sua marca e vamos desenhar o próximo passo juntos."
     label={site.cta.label}
