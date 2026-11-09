@@ -1,0 +1,95 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PageHero from '../../components/PageHero.astro';
+import Section from '../../components/Section.astro';
+import FaqList from '../../components/FaqList.astro';
+import AreasAtendidas from '../../components/AreasAtendidas.astro';
+import CtaBanner from '../../components/CtaBanner.astro';
+import { site, whatsappLink } from '../../config/site';
+import { cidades, cidadeHref, type Cidade } from '../../data/cidades';
+import { servicos, servicoHref } from '../../data/servicos';
+import { breadcrumb, faqPage, servico as servicoSchema } from '../../data/schema';
+
+export function getStaticPaths() {
+  return cidades.map((cidade) => ({
+    params: { cidade: cidade.slug },
+    props: { cidade },
+  }));
+}
+
+interface Props {
+  cidade: Cidade;
+}
+
+const { cidade } = Astro.props;
+const href = cidadeHref(cidade.slug);
+const crumbs = [
+  { name: 'Início', href: '/' },
+  { name: `Marketing digital em ${cidade.nome}`, href },
+];
+const whatsapp = whatsappLink(
+  `Olá! Vim pelo site da Brann. Minha empresa é de ${cidade.nome} e quero conversar.`,
+);
+const prioridades = cidade.prioridades.map((item) => ({
+  ...item,
+  servico: servicos.find((servico) => servico.slug === item.servico)!,
+}));
+---
+
+<BaseLayout
+  title={cidade.seoTitle}
+  description={cidade.description}
+  intro={false}
+  schema={[
+    servicoSchema({
+      name: `Marketing digital em ${cidade.nome}`,
+      description: cidade.description,
+      href,
+      cidades: [cidade.nome],
+    }),
+    breadcrumb(crumbs),
+    faqPage(cidade.faq),
+  ]}
+>
+  <PageHero
+    crumbs={crumbs}
+    title={`Marketing digital em ${cidade.nome}`}
+    lead={cidade.lead}
+    whatsapp={whatsapp}
+  />
+
+  <Section>
+    <div class="max-w-3xl space-y-5">
+      <h2 class="text-3xl font-bold sm:text-4xl">O mercado de {cidade.nome}</h2>
+      {cidade.contexto.map((paragrafo) => <p class="text-lg text-muted">{paragrafo}</p>)}
+    </div>
+  </Section>
+
+  <Section tone="alt">
+    <h2 class="mb-8 text-3xl font-bold sm:text-4xl">Por onde começar</h2>
+    <ul class="divide-y divide-line border-y border-line">
+      {prioridades.map((item) => (
+        <li class="grid gap-1 py-5 md:grid-cols-[1fr_2fr] md:gap-8">
+          <a
+            href={servicoHref(item.servico.slug)}
+            class="font-display text-lg font-semibold underline underline-offset-4 transition-colors hover:text-brand-700"
+          >
+            {item.servico.nome}
+          </a>
+          <p class="text-muted">{item.motivo}</p>
+        </li>
+      ))}
+    </ul>
+  </Section>
+
+  <FaqList items={cidade.faq} />
+  <AreasAtendidas tone="alt" title="Outras cidades" exceto={cidade.slug} />
+
+  <CtaBanner
+    id="contato"
+    title={`Sua empresa é de ${cidade.nome}?`}
+    text={`Conte para a gente o momento do seu negócio. A ${site.name} atende online ou vai até você.`}
+    label="Chamar no WhatsApp"
+    href={whatsapp}
+  />
+</BaseLayout>

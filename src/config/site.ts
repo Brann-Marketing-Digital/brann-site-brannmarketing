@@ -45,7 +45,7 @@ export const site = {
   name: 'Brann Marketing Digital',
   tagline: 'Presença digital com posicionamento e resultado.',
   description:
-    'Agência de marketing digital: redes sociais, criação de sites, identidade visual e produção de vídeos, com estratégia e resultado.',
+    'Agência de marketing digital em Tubarão (SC): redes sociais, sites, identidade visual, vídeos, SEO e tráfego pago para empresas de Tubarão e região.',
   url: 'https://brannmarketing.com.br',
   locale: 'pt-BR',
 
@@ -79,14 +79,24 @@ export const site = {
     {
       title: 'Serviços',
       links: [
-        { label: 'Gestão de redes sociais', href: '/#redes-sociais' },
-        { label: 'Criação de site', href: '/#criacao-de-site' },
-        { label: 'Criação de identidade visual', href: '/#identidade-visual' },
-        { label: 'Produção de vídeos', href: '/#producao-de-videos' },
-        { label: 'SEO estrutural', href: '/#seo' },
-        { label: 'Tráfego pago', href: '/#trafego-pago' },
-        { label: 'Captação de leads', href: '/#captacao-de-leads' },
-        { label: 'Ferramentas digitais sob medida', href: '/#ferramentas-sob-medida' },
+        { label: 'Gestão de redes sociais', href: '/servicos/gestao-de-redes-sociais/' },
+        { label: 'Criação de site', href: '/servicos/criacao-de-sites/' },
+        { label: 'Criação de identidade visual', href: '/servicos/identidade-visual/' },
+        { label: 'Produção de vídeos', href: '/servicos/producao-de-videos/' },
+        { label: 'SEO estrutural', href: '/servicos/seo/' },
+        { label: 'Tráfego pago', href: '/servicos/trafego-pago/' },
+        { label: 'Captação de leads', href: '/servicos/captacao-de-leads/' },
+        { label: 'Ferramentas digitais sob medida', href: '/servicos/ferramentas-sob-medida/' },
+      ],
+    },
+    {
+      title: 'Onde atendemos',
+      links: [
+        { label: 'Capivari de Baixo', href: '/atendimento/capivari-de-baixo/' },
+        { label: 'Laguna', href: '/atendimento/laguna/' },
+        { label: 'Gravatal', href: '/atendimento/gravatal/' },
+        { label: 'Braço do Norte', href: '/atendimento/braco-do-norte/' },
+        { label: 'Criciúma', href: '/atendimento/criciuma/' },
       ],
     },
     {

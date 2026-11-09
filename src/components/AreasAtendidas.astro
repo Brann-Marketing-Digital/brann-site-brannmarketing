@@ -1,0 +1,39 @@
+---
+/** Cidades atendidas, com link para a página de cada uma. */
+import Section from './Section.astro';
+import { cidades, cidadeHref } from '../data/cidades';
+
+interface Props {
+  id?: string;
+  title?: string;
+  /** Cidade a esconder, quando a seção aparece na página dela. */
+  exceto?: string;
+  tone?: 'default' | 'alt';
+}
+
+const { id, title = 'Onde atendemos', exceto, tone = 'default' } = Astro.props;
+const lista = cidades.filter((cidade) => cidade.slug !== exceto);
+---
+
+<Section id={id} {tone}>
+  <div class="grid gap-8 lg:grid-cols-[1fr_2fr] lg:gap-16">
+    <div class="space-y-3">
+      <h2 class="text-3xl font-bold sm:text-4xl">{title}</h2>
+      <p class="max-w-md text-lg text-muted">
+        Nossa base é em Tubarão (SC). Atendemos online ou indo até a sua empresa.
+      </p>
+    </div>
+    <ul class="grid content-start gap-x-8 sm:grid-cols-2">
+      {lista.map((cidade) => (
+        <li class="border-b border-line">
+          <a
+            href={cidadeHref(cidade.slug)}
+            class="block py-3 font-display text-lg font-semibold transition-colors hover:text-brand-700"
+          >
+            Marketing digital em {cidade.nome}
+          </a>
+        </li>
+      ))}
+    </ul>
+  </div>
+</Section>

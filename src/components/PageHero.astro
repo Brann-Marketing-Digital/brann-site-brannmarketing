@@ -1,0 +1,44 @@
+---
+/** Topo das páginas internas: trilha de navegação, título, texto e WhatsApp. */
+import { Icon } from 'astro-icon/components';
+import Container from './Container.astro';
+import Button from './Button.astro';
+
+interface Props {
+  crumbs: { name: string; href: string }[];
+  title: string;
+  lead: string;
+  whatsapp: string;
+}
+
+const { crumbs, title, lead, whatsapp } = Astro.props;
+---
+
+<section class="bg-ink text-white">
+  <Container class="py-12 lg:py-20">
+    <nav aria-label="Trilha de navegação" class="mb-8 text-sm text-white/70">
+      <ol class="flex flex-wrap gap-x-2 gap-y-1">
+        {crumbs.map((crumb, index) => (
+          <li class="flex items-center gap-2">
+            {index > 0 && <span aria-hidden="true">/</span>}
+            {index < crumbs.length - 1 ? (
+              <a href={crumb.href} class="underline-offset-4 hover:text-white hover:underline">
+                {crumb.name}
+              </a>
+            ) : (
+              <span aria-current="page" class="text-white">{crumb.name}</span>
+            )}
+          </li>
+        ))}
+      </ol>
+    </nav>
+    <div class="max-w-3xl space-y-6">
+      <h1 class="text-4xl leading-[1.1] font-extrabold sm:text-5xl">{title}</h1>
+      <p class="text-lg text-white/75">{lead}</p>
+      <Button href={whatsapp} size="lg">
+        <Icon name="simple-icons:whatsapp" class="size-5" />
+        Chamar no WhatsApp
+      </Button>
+    </div>
+  </Container>
+</section>

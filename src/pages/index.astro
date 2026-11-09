@@ -10,6 +10,9 @@ import LogoStrip from '../components/LogoStrip.astro';
 import Testimonials from '../components/Testimonials.astro';
 import TeamSection from '../components/TeamSection.astro';
 import CtaBanner from '../components/CtaBanner.astro';
+import AreasAtendidas from '../components/AreasAtendidas.astro';
+import FaqList from '../components/FaqList.astro';
+import { faqPage } from '../data/schema';
 import { site } from '../config/site';
 import fotoRedes from '../assets/servicos/gestao-redes-sociais.jpg';
 import fotoSite from '../assets/servicos/criacao-site.jpg';
@@ -70,6 +73,25 @@ const motivos = [
   },
 ];
 
+const perguntas = [
+  {
+    q: 'Onde fica a Brann Marketing Digital?',
+    a: 'A Brann é uma agência de marketing digital de Tubarão, em Santa Catarina. Não recebemos clientes no local: o atendimento é online ou indo até a sua empresa.',
+  },
+  {
+    q: 'Quais cidades a Brann atende?',
+    a: 'Tubarão, Capivari de Baixo, Laguna, Gravatal, Braço do Norte, Criciúma e outras cidades do sul de Santa Catarina.',
+  },
+  {
+    q: 'Quais serviços a agência oferece?',
+    a: 'Gestão de redes sociais, criação de sites, identidade visual, produção de vídeos, SEO, tráfego pago, captação de leads e ferramentas digitais sob medida.',
+  },
+  {
+    q: 'Como faço para contratar?',
+    a: 'Chame a gente no WhatsApp pelo número +55 48 99841-0334 e conte o momento da sua empresa. A partir disso, desenhamos o próximo passo juntos.',
+  },
+];
+
 const equipe = [
   {
     name: 'Guilherme Viana',
@@ -85,11 +107,15 @@ const equipe = [
 ];
 ---
 
-<BaseLayout title={site.name} description={site.description}>
+<BaseLayout
+  title="Agência de Marketing em Tubarão (SC)"
+  description={site.description}
+  schema={[faqPage(perguntas)]}
+>
   <Hero
     title={site.tagline}
     highlight="posicionamento e resultado."
-    text="Estratégia de verdade, desenhada para o momento, os objetivos e o mercado do seu negócio. Mais do que entregar serviços, entregamos direção, organização e resultado."
+    text="Agência de marketing digital em Tubarão (SC) e região. Estratégia de verdade, desenhada para o momento, os objetivos e o mercado do seu negócio. Mais do que entregar serviços, entregamos direção, organização e resultado."
   />
   <AboutSection
     id="sobre"
@@ -130,6 +156,7 @@ const equipe = [
   >
     <FeatureBlock
       id="redes-sociais"
+      href="/servicos/gestao-de-redes-sociais/"
       title="Gestão de redes sociais"
       text="Planejamos, criamos e publicamos o conteúdo da sua marca para você ser visto, lembrado e manter uma presença digital consistente."
       points={[
@@ -142,6 +169,7 @@ const equipe = [
     />
     <FeatureBlock
       id="identidade-visual"
+      href="/servicos/identidade-visual/"
       title="Criação de identidade visual"
       text="Branding é gerir a estratégia da marca com planejamento de longo prazo, para que sua empresa seja percebida do jeito que deseja e cresça de forma inteligente e duradoura."
       points={[
@@ -155,6 +183,7 @@ const equipe = [
     />
     <FeatureBlock
       id="producao-de-videos"
+      href="/servicos/producao-de-videos/"
       title="Produção de vídeos"
       text="Vídeos pensados, gravados e editados para fazer sua marca aparecer ainda mais nas redes sociais."
       image={fotoVideos}
@@ -171,6 +200,7 @@ const equipe = [
   >
     <FeatureBlock
       id="criacao-de-site"
+      href="/servicos/criacao-de-sites/"
       title="Criação de site"
       text="Sites rápidos e bonitos, pensados para transformar visitantes em contatos e prontos para serem encontrados no Google."
       points={[
@@ -183,6 +213,7 @@ const equipe = [
     />
     <FeatureBlock
       id="seo"
+      href="/servicos/seo/"
       title="SEO estrutural"
       text="Seu site organizado para ser encontrado no Google: estrutura, velocidade e páginas bem montadas."
       points={[
@@ -204,6 +235,7 @@ const equipe = [
   >
     <FeatureBlock
       id="trafego-pago"
+      href="/servicos/trafego-pago/"
       title="Tráfego pago"
       text="Anúncios no Google e no Meta que levam pessoas interessadas até o seu WhatsApp."
       points={[
@@ -216,6 +248,7 @@ const equipe = [
     />
     <FeatureBlock
       id="captacao-de-leads"
+      href="/servicos/captacao-de-leads/"
       title="Captação de leads"
       text="Atrair visitantes é só o primeiro passo. O resultado acontece quando eles entram em um funil de vendas estruturado e se transformam em leads qualificados."
       points={[
@@ -229,6 +262,7 @@ const equipe = [
     />
     <FeatureBlock
       id="ferramentas-sob-medida"
+      href="/servicos/ferramentas-sob-medida/"
       title="Ferramentas digitais sob medida"
       text="Precisa de algo que não existe pronto? A gente desenha e constrói para o seu negócio."
       points={[
@@ -259,6 +293,8 @@ const equipe = [
     intro="Três fundadores, unidos pelo mesmo objetivo e apoiados por uma rede de especialistas, para fazer acontecer."
     members={equipe}
   />
+  <AreasAtendidas id="onde-atendemos" />
+  <FaqList id="perguntas" tone="alt" items={perguntas} />
   <CtaBanner
     id="contato"
     title="Fale conosco!"

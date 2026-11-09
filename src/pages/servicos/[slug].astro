@@ -1,0 +1,115 @@
+---
+import { Image } from 'astro:assets';
+import { Icon } from 'astro-icon/components';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PageHero from '../../components/PageHero.astro';
+import Section from '../../components/Section.astro';
+import FaqList from '../../components/FaqList.astro';
+import AreasAtendidas from '../../components/AreasAtendidas.astro';
+import CtaBanner from '../../components/CtaBanner.astro';
+import { whatsappLink } from '../../config/site';
+import { servicos, servicoHref, type Servico } from '../../data/servicos';
+import { areaAtendida } from '../../data/cidades';
+import { breadcrumb, faqPage, servico as servicoSchema } from '../../data/schema';
+
+export function getStaticPaths() {
+  return servicos.map((servico) => ({
+    params: { slug: servico.slug },
+    props: { servico },
+  }));
+}
+
+interface Props {
+  servico: Servico;
+}
+
+const { servico } = Astro.props;
+const href = servicoHref(servico.slug);
+const crumbs = [
+  { name: 'Início', href: '/' },
+  { name: 'Serviços', href: '/#servicos' },
+  { name: servico.nome, href },
+];
+const whatsapp = whatsappLink(servico.whatsapp);
+const outros = servicos.filter((item) => item.slug !== servico.slug);
+---
+
+<BaseLayout
+  title={servico.seoTitle}
+  description={servico.description}
+  intro={false}
+  schema={[
+    servicoSchema({
+      name: servico.nome,
+      description: servico.description,
+      href,
+      cidades: areaAtendida,
+    }),
+    breadcrumb(crumbs),
+    faqPage(servico.faq),
+  ]}
+>
+  <PageHero crumbs={crumbs} title={servico.h1} lead={servico.lead} whatsapp={whatsapp} />
+
+  <Section>
+    <div class="grid items-start gap-10 lg:grid-cols-2 lg:gap-16">
+      <div class="space-y-5">
+        <h2 class="text-3xl font-bold sm:text-4xl">Como funciona</h2>
+        {servico.texto.map((paragrafo) => <p class="text-lg text-muted">{paragrafo}</p>)}
+        <h3 class="pt-4 text-xl font-bold">O que está incluído</h3>
+        <ul class="space-y-2">
+          {servico.entregas.map((entrega) => (
+            <li class="flex items-start gap-2">
+              <Icon name="lucide:check" class="mt-0.5 size-5 shrink-0 text-brand-600" />
+              <span>{entrega}</span>
+            </li>
+          ))}
+        </ul>
+      </div>
+      <div class="aspect-[16/10] overflow-hidden rounded-card border-4 border-brand-600 lg:aspect-[4/3]">
+        <Image
+          src={servico.image}
+          alt={servico.imageAlt}
+          widths={[480, 800, 1200]}
+          sizes="(min-width: 1024px) 560px, 100vw"
+          class="size-full object-cover"
+          loading="eager"
+        />
+      </div>
+    </div>
+  </Section>
+
+  <Section tone="alt">
+    <div class="max-w-3xl space-y-4">
+      <h2 class="text-3xl font-bold sm:text-4xl">{servico.regiaoTitulo}</h2>
+      <p class="text-lg text-muted">{servico.regiao}</p>
+    </div>
+  </Section>
+
+  <FaqList items={servico.faq} />
+  <AreasAtendidas tone="alt" />
+
+  <Section>
+    <h2 class="mb-6 text-2xl font-bold sm:text-3xl">Outros serviços</h2>
+    <ul class="flex flex-wrap gap-x-6 gap-y-2">
+      {outros.map((item) => (
+        <li>
+          <a
+            href={servicoHref(item.slug)}
+            class="text-muted underline underline-offset-4 transition-colors hover:text-brand-700"
+          >
+            {item.nome}
+          </a>
+        </li>
+      ))}
+    </ul>
+  </Section>
+
+  <CtaBanner
+    id="contato"
+    title="Vamos conversar?"
+    text="Conte para a gente o momento da sua empresa e vamos desenhar o próximo passo juntos."
+    label="Chamar no WhatsApp"
+    href={whatsapp}
+  />
+</BaseLayout>

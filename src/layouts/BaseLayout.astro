@@ -4,6 +4,7 @@ import Footer from '../components/Footer.astro';
 import Intro from '../components/Intro.astro';
 import MobileWhatsApp from '../components/MobileWhatsApp.astro';
 import { site } from '../config/site';
+import { organizacao, website } from '../data/schema';
 import '../styles/global.css';
 
 interface Props {
@@ -11,12 +12,15 @@ interface Props {
   description?: string;
   /** Vídeo de abertura em tela cheia. Desligue em páginas de texto. */
   intro?: boolean;
+  /** Dados estruturados extras desta página. */
+  schema?: object[];
 }
 
-const { title, description = site.description, intro = true } = Astro.props;
+const { title, description = site.description, intro = true, schema = [] } = Astro.props;
 const fullTitle = title === site.name ? title : `${title} | ${site.name}`;
 const canonical = new URL(Astro.url.pathname, Astro.site);
 const ogImage = new URL('/og.png', Astro.site);
+const jsonLd = [organizacao, website, ...schema];
 ---
 
 <!doctype html>
@@ -39,6 +43,8 @@ const ogImage = new URL('/og.png', Astro.site);
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="theme-color" content="#1c1714" />
     <link rel="icon" type="image/png" href="/favicon.png" />
+    <link rel="sitemap" href="/sitemap.xml" />
+    {jsonLd.map((item) => <script is:inline type="application/ld+json" set:html={JSON.stringify(item)} />)}
     <meta name="generator" content={Astro.generator} />
     <script is:inline defer src="https://backend-analitico-production.up.railway.app/analitico.js" data-site="0123d1df-3ca9-45a0-9f60-83debb026bc7"></script>
   </head>

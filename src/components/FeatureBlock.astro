@@ -15,9 +15,11 @@ interface Props {
   imageAlt: string;
   /** Inverte a ordem texto/imagem no desktop. */
   reverse?: boolean;
+  /** Página completa do serviço. */
+  href?: string;
 }
 
-const { id, title, text, points = [], image, imageAlt, reverse = false } =
+const { id, title, text, points = [], image, imageAlt, reverse = false, href } =
   Astro.props;
 ---
 
@@ -40,6 +42,15 @@ const { id, title, text, points = [], image, imageAlt, reverse = false } =
           </li>
         ))}
       </ul>
+    )}
+    {href && (
+      <a
+        href={href}
+        class="inline-flex items-center gap-1.5 pt-2 font-semibold text-brand-700 underline-offset-4 hover:underline"
+      >
+        Saiba mais sobre {title.toLowerCase()}
+        <Icon name="lucide:arrow-right" class="size-4" />
+      </a>
     )}
   </div>
   <div class="group aspect-[16/10] overflow-hidden rounded-card border-4 border-brand-600 lg:aspect-[4/3]">
